@@ -1,4 +1,4 @@
-# Jeu de cartes
+# Chess Tournament
 
 Chess Tournament project for OpenClassRooms - Projet 4 "Ecrivez du code Python maintenable".
 
