@@ -1,6 +1,6 @@
 # Jeu de cartes
 
-Jeu de carte créé pour le cours OpenClassrooms "Ecrivez du code Python maintenable".
+Chess Tournament project for OpenClassRooms - Projet 4 "Ecrivez du code Python maintenable".
 
 ## Installation
 
