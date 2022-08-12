@@ -111,6 +111,7 @@ class Controller:
         """while len(self.players) < TOURNAMENT_PLAYER_NUMBER:
             self.get_new_players()"""
 
+        # TEST REPORTS
         self.view.show_list_all_players(self.players)
         self.view.show_list_all_players(self.players, "Rank")
 
