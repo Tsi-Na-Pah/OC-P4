@@ -46,7 +46,9 @@ class PlayerView:
         print("List all the players in " + sort_order + " order:")
         i = 1
         for player in players:
-            print(f"Chess Player #{i}: " + player.firstname + " " + player.lastname + " - rank #" + str(player.rank))
+            print(f"Chess Player #{i}: " + player.firstname + " " + player.lastname + " (" + player.birthdate + " - "
+                  + player.gender + ") - rank #" + str(player.rank))
+            i += 1
 
     def prompt_for_flip_cards(self):
         """Request to return the cards."""

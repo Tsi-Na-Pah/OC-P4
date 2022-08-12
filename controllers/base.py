@@ -4,6 +4,8 @@ from models.match import Match
 from models.round import Round
 from models.tournament import ChessTournament
 
+from controllers.staticdata import random_static_player_data
+
 from typing import List
 import random
 import datetime
@@ -56,7 +58,7 @@ class Controller:
 
         return chess_tournament
 
-    def select_players(self,chess_tournament, players):
+    def select_players(self, chess_tournament, players):
         number_selected = 0
         player_score_initial_score = 0
         for player in players:
@@ -75,33 +77,27 @@ class Controller:
                 match.score2 = float(MATCH_SCORE[0][1])
         return
 
-    def evaluate_game(self):
-        """Evaluate the game."""
-        return self.checker_strategy.check(self.players)
-
-    def rebuild_deck(self):
-        """Rebuild the deck."""
-        for player in self.players:
-            while player.hand:
-                card = player.hand.pop()
-                card.is_face_up = False
-                self.deck.append(card)
-        self.deck.shuffle()
-
-    def start_game(self):
-        """Shuffle the deck and makes the players draw a card."""
-        self.deck.shuffle()
-        for player in self.players:
-            card = self.deck.draw_card()
-            if card:
-                player.hand.append(card)
-
     def run(self):
 
-        ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        total_number_players = 20
+        ranks = []
+        for rank in range(total_number_players):
+            ranks.append(rank+1)
+        #ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
         random.shuffle(ranks)
 
-        self.players.append(ChessPlayer("Doe1", "John", "01/01/2000", "M", ranks[0]))
+        for index in range(total_number_players):
+            player_info = random_static_player_data()
+            chess_player = ChessPlayer(player_info["LastName"],
+                                       player_info["FirstName"],
+                                       player_info["BirthDate"],
+                                       player_info["Gender"],
+                                       int(ranks[index]))
+            self.players.append(chess_player)
+
+        print(self.players)
+
+        """self.players.append(ChessPlayer("Doe1", "John", "01/01/2000", "M", ranks[0]))
         self.players.append(ChessPlayer("Doe2", "John", "01/01/2000", "M", ranks[1]))
         self.players.append(ChessPlayer("Doe3", "John", "01/01/2000", "M", ranks[2]))
         self.players.append(ChessPlayer("Doe4", "John", "01/01/2000", "M", ranks[3]))
@@ -109,7 +105,7 @@ class Controller:
         self.players.append(ChessPlayer("Doe6", "Jane", "01/01/2000", "F", ranks[5]))
         self.players.append(ChessPlayer("Doe7", "Jane", "01/01/2000", "F", ranks[6]))
         self.players.append(ChessPlayer("Doe8", "Jane", "01/01/2000", "F", ranks[7]))
-        #only 7 players, one is missing
+        """
 
         #we need at least 8 players
         """while len(self.players) < TOURNAMENT_PLAYER_NUMBER:
@@ -121,7 +117,6 @@ class Controller:
         chess_tournament = self.initiate_new_tournament()
         random.shuffle(self.players)
         self.select_players(chess_tournament, self.players)
-
 
         for round_number in range(TOURNAMENT_ROUND_NUMBER):
             round = Round("Round" + str(round_number + 1), datetime.datetime.today(), None)
